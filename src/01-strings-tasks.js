@@ -202,8 +202,38 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const cornerRT = '┐';
+  const cornerLT = '┌';
+  const cornerRB = '┘';
+  const cornerLB = '└';
+  const vertical = '│';
+  const horizontal = '─';
+  const space = ' ';
+
+  function getHorisontLine(left, right) {
+    let str = left;
+    for (let i = 1; i < width - 1; i += 1) {
+      str += horizontal;
+    }
+    str += right;
+    return str;
+  }
+
+  function getLine() {
+    let str = vertical;
+    for (let i = 1; i < width - 1; i += 1) {
+      str += space;
+    }
+    str += vertical;
+    return str;
+  }
+  let result = `${getHorisontLine(cornerLT, cornerRT)}\n`;
+  for (let i = 1; i < height - 1; i += 1) {
+    result += `${getLine()}\n`;
+  }
+  result += `${getHorisontLine(cornerLB, cornerRB)}\n`;
+  return result;
 }
 
 
@@ -223,8 +253,23 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const alphStart = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const alph2End = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  const arr = str.split('');
+  const newArr = [];
+
+  arr.forEach((elem) => {
+    if (alphStart.indexOf(elem) !== -1) {
+      newArr.push(alph2End[alphStart.indexOf(elem)]);
+    } else if (alph2End.indexOf(elem) !== -1) {
+      newArr.push(alphStart[alph2End.indexOf(elem)]);
+    } else {
+      newArr.push(elem);
+    }
+  });
+
+  return newArr.join('');
 }
 
 /**

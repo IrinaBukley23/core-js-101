@@ -51,10 +51,8 @@ function getCircleCircumference(radius) {
  *  10, 0  => 5
  *  -3, 3  => 0
  */
-function getAverage(/*  value1, value2  */) {
-  //  return (value1 + value2) / 2;
-  //  ????????????????????????????????????? Infinity
-  throw new Error('Not implemented');
+function getAverage(value1, value2) {
+  return (value1 + value2) / 2;
 }
 
 /**
@@ -111,8 +109,11 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  const scal = x1 * x2 + y1 * y2;
+  const absA = Math.sqrt(x1 ** 2 + y1 ** 2);
+  const absB = Math.sqrt(x2 ** 2 + y2 ** 2);
+  return scal / (absA + absB);
 }
 
 /**
@@ -183,8 +184,12 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
+function roundToPowerOfTen(num, pow) {
+  const n = 10 ** pow;
+  if (n) {
+    return Math.round(num / n) * n;
+  }
+  return Math.ceil(num);
 }
 
 /**
@@ -204,8 +209,16 @@ function roundToPowerOfTen(/* num, pow */) {
  *   16 => false
  *   17 => true
  */
-function isPrime(/* n */) {
-  throw new Error('Not implemented');
+function isPrime(n) {
+  const num = Math.floor(Math.sqrt(n));
+  let flag = n !== 1;
+  for (let i = 2; i < num + 1; i += 1) {
+    if (n % i === 0) {
+      flag = false;
+      break;
+    }
+  }
+  return flag;
 }
 
 /**

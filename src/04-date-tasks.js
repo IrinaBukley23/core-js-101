@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return Date.parse(value);
 }
 
 /**
@@ -34,8 +34,8 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return Date.parse(value);
 }
 
 
@@ -53,8 +53,13 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const year = date.getFullYear();
+  const endData = new Date(year, 1, 29);
+  if (endData.getDate() === 29) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -73,8 +78,36 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  let dif = endDate - startDate;
+  const difH = Math.floor(dif / 3600000);
+  dif -= difH * 3600000;
+  const difM = Math.floor(dif / 60000);
+  dif -= difM * 60000;
+  const difS = Math.floor(dif / 1000);
+  dif -= difS * 1000;
+  const difMilis = dif;
+  const formatTime = (time) => {
+    if (String(time).length < 2) return `0${time}`;
+    return `${time}`;
+  };
+  const formatMilisecondsTime = (time) => {
+    const numberLength = String(time).length;
+    if (numberLength === 1) {
+      return `00${time}`;
+    }
+    if (numberLength === 2) {
+      return `0${time}`;
+    }
+    return `${time}`;
+  };
+
+  const hours = formatTime(difH);
+  const minutes = formatTime(difM);
+  const seconds = formatTime(difS);
+  const milisec = formatMilisecondsTime(difMilis);
+
+  return `${hours}:${minutes}:${seconds}.${milisec}`;
 }
 
 
