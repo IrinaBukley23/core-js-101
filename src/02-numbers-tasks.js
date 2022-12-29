@@ -52,7 +52,13 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  return (value1 + value2) / 2;
+  let average;
+  if (value1 === value2) {
+    average = value1;
+  } else {
+    average = (value1 + value2) / 2;
+  }
+  return average;
 }
 
 /**
@@ -113,7 +119,7 @@ function getAngleBetweenVectors(x1, y1, x2, y2) {
   const scal = x1 * x2 + y1 * y2;
   const absA = Math.sqrt(x1 ** 2 + y1 ** 2);
   const absB = Math.sqrt(x2 ** 2 + y2 ** 2);
-  return scal / (absA + absB);
+  return Math.acos(scal / (absA * absB));
 }
 
 /**
